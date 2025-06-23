@@ -1,19 +1,15 @@
 const std = @import("std");
 const river = @import("../riverWrapper.zig");
 
-pub fn setup(r: *river.River, conf: anytype) !void {
-    // Set default layout
-    try r.cmd(.{ "default-layout", "rivertile" });
+const view_padding = 6;
+const outer_padding = 6;
 
-    // Start layout manager
-    const view_padding = try std.fmt.allocPrint(r.allocator, "{}", .{conf.layout.view_padding});
-    defer r.allocator.free(view_padding);
-    const outer_padding = try std.fmt.allocPrint(r.allocator, "{}", .{conf.layout.outer_padding});
-    defer r.allocator.free(outer_padding);
+pub fn setup(r: *river.River) !void {
+    try r.cmd(&.{ "default-layout", "rivertile" });
 
-    try r.start(&.{ "rivertile", "-view-padding", view_padding, "-outer-padding", outer_padding });
+    var buf: [16]u8 = undefined;
+    const view_padding_str = try std.fmt.bufPrint(&buf, "{}", .{view_padding});
+    const outer_padding_str = try std.fmt.bufPrint(&buf, "{}", .{outer_padding});
 
-    // Autostart other applications
-    // try r.start(&.{ "waybar" });
-    // try r.start(&.{ "mako" });
+    try r.start(&.{ "rivertile", "-view-padding", view_padding_str, "-outer-padding", outer_padding_str });
 }
