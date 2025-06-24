@@ -1,0 +1,55 @@
+@define-color white #ffffff;
+@define-color black #111111;
+
+* {
+  font-family: "JetBrainsMonoNL Nerd Font";
+  font-weight: bold;
+  min-height: 0;
+  /* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
+  font-size: 99%;
+  font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+}
+
+window#waybar {
+  background: @white;
+  /* background: transparent; */
+  border-radius: 0px;
+  border: 4px solid @black;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+tooltip {
+  color: @black;
+  /* background: rgba(0, 0, 0, 0.8); */
+  background: @white;
+  border-radius: 0px;
+  border: 4px solid @black;
+}
+
+tooltip label {
+  color: @black;
+  padding-right: 2px;
+  padding-left: 2px;
+}
+
+#tags button.focused {
+  border-bottom: 1px solid @black;
+  border-radius: 0;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  font-size: 16px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.modules-left {
+  padding-left: 14px;
+}
+
+.modules-right {
+  padding-right: 14px;
+}
