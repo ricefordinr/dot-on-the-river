@@ -6,6 +6,7 @@ pub const River = struct {
     bootstrap_allocator: std.mem.Allocator,
     allocator: std.mem.Allocator,
 
+    /// This is constructor
     pub fn init(bootstrap_allocator: std.mem.Allocator) !River {
         const gpa_ptr = try bootstrap_allocator.create(std.heap.GeneralPurposeAllocator(.{}));
         gpa_ptr.* = .{};
@@ -16,6 +17,7 @@ pub const River = struct {
         };
     }
 
+    /// This is not constructor
     pub fn deinit(self: *River) void {
         _ = self.gpa.deinit();
         self.bootstrap_allocator.destroy(self.gpa);
@@ -34,7 +36,7 @@ pub const River = struct {
         self.allocator.free(result.stderr);
     }
 
-    /// Don't ask why this exist
+    /// Don't ask why this exists
     pub fn cmd(self: *River, args: []const []const u8) !void {
         try self.run(args);
     }
@@ -50,7 +52,7 @@ pub const River = struct {
         try self.run(arg_list.items);
     }
 
-    /// This send to bind() instead
+    /// Spawn applications with keypress
     pub fn spawn(self: *River, modifiers: []const u8, key: []const u8, command: []const u8) !void {
         try self.bind("normal", modifiers, key, &.{ "spawn", command });
     }
@@ -60,9 +62,34 @@ pub const River = struct {
         try self.cmd(&.{ "map-pointer", "normal", modifiers, button, action });
     }
 
-    /// Same as spawn(), but processes are not owned by river
+    /// Spawn without keypress
     pub fn start(self: *River, argv: []const []const u8) !void {
         var child = std.process.Child.init(argv, self.allocator);
         try child.spawn();
+    }
+
+    /// Add window rules to matching id AND title
+    pub fn rule(self: *River, ruleName: []const u8, matcher: struct {
+        title: []const u8 = "",
+        id: []const u8 = "",
+        arg: []const u8 = "",
+    }) !void {
+        var arg_list = std.ArrayList([]const u8).init(self.allocator);
+        defer arg_list.deinit();
+
+        try arg_list.append("rule-add");
+        if (!std.mem.eql(u8, matcher.id, "")) {
+            try arg_list.appendSlice(&[_][]const u8{ "-app-id", matcher.id });
+        }
+        if (!std.mem.eql(u8, matcher.title, "")) {
+            try arg_list.appendSlice(&[_][]const u8{ "-title", matcher.title });
+        }
+
+        try arg_list.append(ruleName);
+        if (!std.mem.eql(u8, matcher.arg, "")) {
+            try arg_list.append(matcher.arg);
+        }
+
+        try self.run(arg_list.items);
     }
 };
