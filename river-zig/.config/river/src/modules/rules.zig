@@ -16,4 +16,6 @@ pub fn setup(r: *river.River) !void {
     try r.rule("float", .{ .id = "*pavucontrol*" });
 
     try r.rule("tags", .{ .id = "discord", .arg = "32" });
+
+    try r.rule("csd", .{ .id = "waybar" });
 }

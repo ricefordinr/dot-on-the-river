@@ -18,6 +18,10 @@ pub fn setup(r: *river.River) !void {
     try r.spawn(C_MOD, RET, fallback_terminal);
     try r.spawn(MOD, "D", launcher);
 
+    // Spawning utils
+    try r.spawn(MOD, "B", "~/.config/waybar/scripts/toggle.sh");
+    try r.spawn(MOD, "C", "~/applications/bin/wl-color-picker.sh");
+
     // Window management
     try r.bind("normal", MOD, "Q", &.{"close"});
     try r.bind("normal", S_MOD, "E", &.{"exit"});
