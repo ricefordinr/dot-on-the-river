@@ -21,6 +21,7 @@ pub fn setup(r: *river.River) !void {
     // Spawning utils
     try r.spawn(MOD, "B", "~/.config/waybar/scripts/toggle.sh");
     try r.spawn(MOD, "C", "~/applications/bin/wl-color-picker.sh");
+    try r.spawn(MOD, "W", "~/.config/river/scripts/toggleScreenScaling.sh");
 
     // Window management
     try r.bind("normal", MOD, "Q", &.{"close"});
@@ -32,6 +33,12 @@ pub fn setup(r: *river.River) !void {
     try r.bind("normal", MOD, "Space", &.{"toggle-float"});
     try r.bind("normal", MOD, "F", &.{"toggle-fullscreen"});
     try r.bind("normal", S_MOD, RET, &.{"zoom"});
+
+    // Outputs management
+    try r.bind("normal", MOD, "period", &.{ "focus-output", "next" });
+    try r.bind("normal", MOD, "comma", &.{ "focus-output", "previous" });
+    try r.bind("normal", S_MOD, "period", &.{ "send-to-output", "next" });
+    try r.bind("normal", S_MOD, "comma", &.{ "send-to-output", "previous" });
 
     // Rivertile layout commands
     try r.bind("normal", MOD, "H", &.{ "send-layout-cmd", "rivertile", "main-ratio -0.05" });

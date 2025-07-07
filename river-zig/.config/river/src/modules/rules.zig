@@ -10,8 +10,10 @@ pub fn setup(r: *river.River) !void {
     //Make Picture in Picture floats
     try r.rule("float", .{ .title = "*Picture-in-Picture*" });
     try r.rule("float", .{ .title = "*picture-in-picture*" });
+    try r.rule("float", .{ .title = "*Picture-in-picture*" });
     try r.rule("float", .{ .title = "*Picture in Picture*" });
     try r.rule("float", .{ .title = "*picture in picture*" });
+    try r.rule("float", .{ .title = "*Picture in picture*" });
 
     try r.rule("float", .{ .id = "*pavucontrol*" });
 
