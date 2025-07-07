@@ -141,6 +141,19 @@
         "smooth-scrolling-threshold": 1,
     },
 
+    "custom/colorpicker": {
+        "format": " ",
+        "on-click": "~/.local/bin/wl-color-picker.sh",
+    },
+
+    "custom/screenshot": {
+        "format": "󰄀 ",
+        "on-click": "grimshot copy area",
+        "on-click-right": "grimshot copy output",
+        "on-click-middle": "grimshot copy screen",
+        "tooltip-format": "left: area\nright:output\nmiddle:screen",
+    },
+
     "backlight": {
         "interval": 2,
         "align": 0,
